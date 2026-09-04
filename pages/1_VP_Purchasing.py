@@ -38,7 +38,7 @@ with c1:
     fig.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig.update_layout(height=380, yaxis_title="Delivery reliability (%)", xaxis_title="Round",
                        xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig, width='stretch')
+    st.plotly_chart(fig, width='stretch', theme=None)
 with c2:
     fig2 = go.Figure()
     for i, cname in enumerate(components):
@@ -50,7 +50,7 @@ with c2:
     fig2.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig2.update_layout(height=380, yaxis_title="Rejection (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig2, width='stretch')
+    st.plotly_chart(fig2, width='stretch', theme=None)
 
 st.caption(
     "PET's reliability collapsed under Trio PET PLC (Rounds 1-3, Poor quality rating) "
@@ -74,7 +74,7 @@ with c3:
     fig3.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig3.update_layout(height=340, yaxis_title="Component availability (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig3, width='stretch')
+    st.plotly_chart(fig3, width='stretch', theme=None)
 with c4:
     fig4 = go.Figure()
     for cname in components:
@@ -83,7 +83,7 @@ with c4:
     fig4.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig4.update_layout(height=340, yaxis_title="Obsolete (%)", xaxis_title="Round", barmode="group",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig4, width='stretch')
+    st.plotly_chart(fig4, width='stretch', theme=None)
 st.caption("Component obsolescence is 0% in every round — raw materials carry no shelf-life risk in this model.")
 
 st.markdown("---")
@@ -109,7 +109,7 @@ fig5.update_layout(
     yaxis2=dict(title=axis_title("ROI (%)"), overlaying="y", side="right", showgrid=False, **Y2_AXIS_STYLE),
     xaxis=dict(title="Round", tickmode="linear", dtick=1),
 )
-st.plotly_chart(fig5, width='stretch')
+st.plotly_chart(fig5, width='stretch', theme=None)
 st.caption(
     "Purchase value stayed within a tight band across all 6 rounds even through 3 "
     "supplier switches — the supplier changes were quality/reliability driven, not cost-driven."
@@ -126,7 +126,7 @@ for sup in sorted(sup_purch["supplier"].unique()):
 fig6.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig6.update_layout(height=420, barmode="stack", yaxis_title="Purchase value (€)", xaxis_title="Round",
                     xaxis=dict(tickmode="linear", dtick=1))
-st.plotly_chart(fig6, width='stretch')
+st.plotly_chart(fig6, width='stretch', theme=None)
 
 with st.expander("Underlying component data"):
     st.dataframe(comp, width='stretch')

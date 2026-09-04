@@ -34,7 +34,7 @@ for cname in components:
 fig.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig.update_layout(height=380, yaxis_title="Component availability (%)", xaxis_title="Round",
                    xaxis=dict(tickmode="linear", dtick=1))
-st.plotly_chart(fig, width='stretch')
+st.plotly_chart(fig, width='stretch', theme=None)
 
 st.markdown("---")
 
@@ -48,7 +48,7 @@ for p in products:
 fig2.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig2.update_layout(height=380, yaxis_title="OSA (%)", xaxis_title="Round",
                     xaxis=dict(tickmode="linear", dtick=1))
-st.plotly_chart(fig2, width='stretch')
+st.plotly_chart(fig2, width='stretch', theme=None)
 
 st.markdown("---")
 
@@ -62,7 +62,7 @@ fig3 = go.Figure(go.Bar(
 ))
 fig3.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig3.update_layout(height=340, xaxis_title="Purchase value (€)", yaxis_title="")
-st.plotly_chart(fig3, width='stretch')
+st.plotly_chart(fig3, width='stretch', theme=None)
 st.caption(
     "PET and Orange are the largest financial footprint components by purchase value — "
     "reliability issues here have outsized ROI impact. Vitamin C is financially immaterial "
@@ -80,7 +80,7 @@ fig4 = go.Figure(go.Bar(
 ))
 fig4.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig4.update_layout(height=340, xaxis_title="Obsolescence (%)", yaxis_title="")
-st.plotly_chart(fig4, width='stretch')
+st.plotly_chart(fig4, width='stretch', theme=None)
 
 with st.expander("Underlying component data"):
     st.dataframe(comp, width='stretch')

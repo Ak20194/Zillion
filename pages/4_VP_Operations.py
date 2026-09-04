@@ -38,7 +38,7 @@ with c1:
     fig.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig.update_layout(height=380, yaxis_title="Cube utilization (%)", xaxis_title="Round",
                        xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig, width='stretch')
+    st.plotly_chart(fig, width='stretch', theme=None)
     st.caption("Shaded band = the ~80-90% efficient utilization range targeted across the game.")
 with c2:
     fig2 = go.Figure()
@@ -47,7 +47,7 @@ with c2:
     fig2.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig2.update_layout(height=380, barmode="group", yaxis_title="Overflow (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig2, width='stretch')
+    st.plotly_chart(fig2, width='stretch', theme=None)
 
 st.caption(
     "Round 2 shows the overflow crisis (RM/FG both near-full). Round 4 overcorrects into "
@@ -68,7 +68,7 @@ fig3.add_hline(y=90, line_dash="dot", line_color=NEUTRAL, annotation_text="90% t
 fig3.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig3.update_layout(height=380, yaxis_title="Avg. production plan adherence (%)", xaxis_title="Round",
                     xaxis=dict(tickmode="linear", dtick=1))
-st.plotly_chart(fig3, width='stretch')
+st.plotly_chart(fig3, width='stretch', theme=None)
 st.caption(
     "Adherence climbed from the low-80s to 96%+ by Round 5-6, driven by SMED, preventive "
     "maintenance, and breakdown training — the clearest operational win of the whole game."
@@ -90,7 +90,7 @@ fig4.update_layout(
     yaxis2=dict(title=axis_title("Total COGS (€)"), overlaying="y", side="right", showgrid=False, **Y2_AXIS_STYLE),
     xaxis=dict(title="Round", tickmode="linear", dtick=1),
 )
-st.plotly_chart(fig4, width='stretch')
+st.plotly_chart(fig4, width='stretch', theme=None)
 st.caption(
     "Round 5's third-shift decision spiked production cost (+€100k/round in permanent "
     "employees) against 37% idle bottling capacity — reversed in Round 6, recovering ~€86.5k."

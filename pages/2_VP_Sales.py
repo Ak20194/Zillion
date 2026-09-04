@@ -36,7 +36,7 @@ with c1:
     fig.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig.update_layout(height=380, barmode="group", yaxis_title="Bonus / Penalty (€)",
                        xaxis_title="Round", xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig, width='stretch')
+    st.plotly_chart(fig, width='stretch', theme=None)
 with c2:
     fig2 = go.Figure()
     for cust in ["Food & Groceries", "LAND Market", "Dominick's"]:
@@ -45,7 +45,7 @@ with c2:
     fig2.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig2.update_layout(height=380, barmode="stack", yaxis_title="Contracted Revenue (€)",
                         xaxis_title="Round", xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig2, width='stretch')
+    st.plotly_chart(fig2, width='stretch', theme=None)
 
 latest_round = revenue["round"].max()
 latest_rev = revenue[revenue["round"] == latest_round].sort_values("contracted_revenue", ascending=False)
@@ -66,7 +66,7 @@ with c3:
     fig3.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig3.update_layout(height=340, yaxis_title="Avg. attained shelf life (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig3, width='stretch')
+    st.plotly_chart(fig3, width='stretch', theme=None)
 with c4:
     sl2_by_round = cp.groupby("round")[["service_level_pieces", "service_level_order_lines"]].mean().reset_index()
     fig4 = go.Figure()
@@ -77,7 +77,7 @@ with c4:
     fig4.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig4.update_layout(height=340, yaxis_title="Avg. service level (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig4, width='stretch')
+    st.plotly_chart(fig4, width='stretch', theme=None)
 
 st.markdown("---")
 
@@ -90,7 +90,7 @@ with c5:
     fig5.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig5.update_layout(height=340, yaxis_title="Avg. MAPE (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig5, width='stretch')
+    st.plotly_chart(fig5, width='stretch', theme=None)
 with c6:
     products = sorted(prod["product"].dropna().unique())
     fig6 = go.Figure()
@@ -100,7 +100,7 @@ with c6:
     fig6.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig6.update_layout(height=340, yaxis_title="Obsolescence (%)", xaxis_title="Round",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig6, width='stretch')
+    st.plotly_chart(fig6, width='stretch', theme=None)
 st.caption(
     "Forecast error (MAPE) stayed high (47-61%) across every round and never meaningfully "
     "improved — the single largest unresolved functional KPI gap in Sales."

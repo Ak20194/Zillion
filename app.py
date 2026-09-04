@@ -53,7 +53,7 @@ with left:
         height=380, yaxis_title="ROI (%)", xaxis_title="Round",
         xaxis=dict(tickmode="linear", dtick=1),
     )
-    st.plotly_chart(fig, width='stretch')
+    st.plotly_chart(fig, width='stretch', theme=None)
 
 with right:
     st.subheader("Revenue vs. Cost")
@@ -64,7 +64,7 @@ with right:
     fig2.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig2.update_layout(height=380, barmode="group", xaxis_title="Round", yaxis_title="€",
                         xaxis=dict(tickmode="linear", dtick=1))
-    st.plotly_chart(fig2, width='stretch')
+    st.plotly_chart(fig2, width='stretch', theme=None)
 
 st.markdown("---")
 
@@ -99,7 +99,7 @@ if len(bridge_rounds) >= 2:
     ))
     fig3.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
     fig3.update_layout(height=420, yaxis_title="€")
-    st.plotly_chart(fig3, width='stretch')
+    st.plotly_chart(fig3, width='stretch', theme=None)
     st.caption(
         f"Operating profit moved from {money(r0['operating_profit'])} to "
         f"{money(r1['operating_profit'])} between Round {int(r0['round'])} and "
