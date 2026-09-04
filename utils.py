@@ -2,10 +2,19 @@
 Shared theme, colors, and helper functions used across every page of the
 Team Zillions (#2) Fresh Connection dashboard.
 """
+import os
+from pathlib import Path
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
+
+# Resolve the data/ folder relative to this file's location, not the process's
+# current working directory. Streamlit Cloud does not guarantee CWD == the
+# app's own folder (this varies by how the app is launched and by page
+# navigation), so a bare relative path like "data/foo.csv" can fail with
+# FileNotFoundError even though the file is committed and present.
+DATA_DIR = Path(__file__).resolve().parent / "data"
 
 # ---------------- Team Zillions palette ----------------
 BG = "#F7F3EA"          # warm ivory background
@@ -66,17 +75,29 @@ def team_tag():
 
 @st.cache_data
 def load_data():
-    d = {}
-    d["financial"] = pd.read_csv("data/financial_kpis.csv")
-    d["supplier_purchase"] = pd.read_csv("data/supplier_purchase.csv")
-    d["customer_bonus"] = pd.read_csv("data/customer_bonus.csv")
-    d["customer_revenue"] = pd.read_csv("data/customer_revenue.csv")
-    d["component"] = pd.read_csv("data/component.csv")
-    d["product"] = pd.read_csv("data/product.csv")
-    d["customer_product"] = pd.read_csv("data/customer_product.csv")
-    d["warehouse"] = pd.read_csv("data/warehouse.csv")
-    d["bottling"] = pd.read_csv("data/bottling.csv")
-    return d
+    try:
+        d = {}
+        d["financial"] = pd.read_csv(DATA_DIR / "financial_kpis.csv")
+        d["supplier_purchase"] = pd.read_csv(DATA_DIR / "supplier_purchase.csv")
+        d["customer_bonus"] = pd.read_csv(DATA_DIR / "customer_bonus.csv")
+        d["customer_revenue"] = pd.read_csv(DATA_DIR / "customer_revenue.csv")
+        d["component"] = pd.read_csv(DATA_DIR / "component.csv")
+        d["product"] = pd.read_csv(DATA_DIR / "product.csv")
+        d["customer_product"] = pd.read_csv(DATA_DIR / "customer_product.csv")
+        d["warehouse"] = pd.read_csv(DATA_DIR / "warehouse.csv")
+        d["bottling"] = pd.read_csv(DATA_DIR / "bottling.csv")
+        return d
+    except FileNotFoundError as e:
+        st.error(
+            f"Could not find a required data file: **{e.filename}**\n\n"
+            f"Looked in: `{DATA_DIR}`\n\n"
+            "This usually means the `data/` folder wasn't pushed to GitHub, "
+            "or a file inside it is named differently than expected "
+            "(GitHub paths are case-sensitive, even if your local machine "
+            "isn't). Check that your repo has a `data/` folder at the same "
+            "level as `app.py`, containing all 9 CSVs listed in the README."
+        )
+        st.stop()
 
 
 def round_range_slider(key="round_range", min_round=0, max_round=6, default=(0, 6)):
