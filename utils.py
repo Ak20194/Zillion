@@ -43,13 +43,37 @@ def inject_css():
     st.markdown(
         f"""
         <style>
+        /* ---- Nuclear option: force navy text on EVERYTHING inside the
+           app first, then carve out specific exceptions after. This is
+           deliberately broad because Streamlit's own text elements don't
+           reliably match a fixed list of tag/testid selectors across
+           versions — targeting individual tags left many elements
+           (especially inside div-wrapped containers) still inheriting
+           Streamlit's own theme color, which is invisible on our light
+           background. Order matters below: broad rule first, narrower
+           overrides after, so the later rules win on equal specificity. */
+        .stApp, .stApp * {{
+            color: {NAVY} !important;
+        }}
         .stApp {{ background-color: {BG}; }}
+        header[data-testid="stHeader"] {{ background-color: {BG}; }}
         section[data-testid="stSidebar"] {{ background-color: {CARD}; }}
-        h1, h2, h3, h4 {{ color: {NAVY} !important; font-family: Georgia, serif; }}
+
+        h1, h2, h3, h4 {{ font-family: Georgia, serif; }}
+
+        /* Captions and secondary text: lighter than headings */
+        [data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] * {{
+            color: {NEUTRAL} !important;
+        }}
+
+        /* Brand tag: gold text on a navy pill — must come after the
+           blanket rule above to win */
+        .zillions-tag, .zillions-tag * {{
+            color: {GOLD} !important;
+        }}
         .zillions-tag {{
             display: inline-block;
             background-color: {NAVY};
-            color: {GOLD};
             padding: 4px 14px;
             border-radius: 999px;
             font-size: 0.8rem;
@@ -57,12 +81,44 @@ def inject_css():
             letter-spacing: 0.03em;
             margin-bottom: 0.5rem;
         }}
+
+        /* Metric cards */
         div[data-testid="stMetric"] {{
             background-color: {CARD};
             border: 1px solid {GRID};
             border-radius: 10px;
             padding: 12px 16px;
         }}
+        div[data-testid="stMetric"] [data-testid="stMetricLabel"],
+        div[data-testid="stMetric"] [data-testid="stMetricLabel"] * {{
+            color: {NEUTRAL} !important;
+        }}
+        div[data-testid="stMetric"] [data-testid="stMetricValue"],
+        div[data-testid="stMetric"] [data-testid="stMetricValue"] * {{
+            color: {NAVY} !important;
+        }}
+        /* Delta arrows keep their functional green/amber meaning —
+           Streamlit adds its own up/down color via a data attribute;
+           we only recolor the "up" (positive) case to our teal since
+           amber is already close to Streamlit's native down-color. */
+        div[data-testid="stMetric"] [data-testid="stMetricDelta"] svg[style*="rgb(9, 171, 59)"] {{
+            fill: {POSITIVE} !important;
+        }}
+
+        /* Sliders: replace Streamlit's default red accent with our gold */
+        div[data-testid="stSlider"] [role="slider"] {{
+            background-color: {GOLD} !important;
+            border-color: {GOLD} !important;
+        }}
+        div[data-testid="stSliderTickBarMin"], div[data-testid="stSliderTickBarMax"],
+        div[data-testid="stSliderTickBarMin"] *, div[data-testid="stSliderTickBarMax"] * {{
+            color: {NEUTRAL} !important;
+        }}
+        div[data-baseweb="slider"] div[data-testid="stTickBar"] {{ background: {GRID} !important; }}
+
+        /* Buttons, links, expanders: keep readable against our light bg */
+        a, a * {{ color: {GOLD} !important; }}
+        summary, summary * {{ color: {NAVY} !important; }}
         </style>
         """,
         unsafe_allow_html=True,
