@@ -32,11 +32,33 @@ PLOTLY_TEMPLATE = dict(
         plot_bgcolor=CARD,
         font=dict(family="Georgia, serif", color=NAVY, size=13),
         colorway=[NAVY, GOLD, POSITIVE, NEGATIVE, "#8C9BD4", "#B08968"],
-        xaxis=dict(gridcolor=GRID, zerolinecolor=GRID),
-        yaxis=dict(gridcolor=GRID, zerolinecolor=GRID),
-        legend=dict(bgcolor=CARD),
+        xaxis=dict(
+            gridcolor=GRID, zerolinecolor=GRID, linecolor=GRID,
+            tickfont=dict(color=NAVY, family="Georgia, serif"),
+            title=dict(font=dict(color=NAVY, family="Georgia, serif")),
+        ),
+        yaxis=dict(
+            gridcolor=GRID, zerolinecolor=GRID, linecolor=GRID,
+            tickfont=dict(color=NAVY, family="Georgia, serif"),
+            title=dict(font=dict(color=NAVY, family="Georgia, serif")),
+        ),
+        legend=dict(bgcolor=CARD, font=dict(color=NAVY)),
     )
 )
+
+# Reusable style block for any secondary (right-hand) y-axis a page defines
+# manually — since those are built as fresh dicts per-chart, they don't
+# inherit the template above and need the same explicit colors. Deliberately
+# excludes "title" (a page sets that itself as its own dict — see below).
+Y2_AXIS_STYLE = dict(
+    tickfont=dict(color=NAVY, family="Georgia, serif"),
+)
+
+
+def axis_title(text):
+    """A title dict with our color baked in, for axes built outside the
+    shared template (e.g. secondary y-axes)."""
+    return dict(text=text, font=dict(color=NAVY, family="Georgia, serif"))
 
 
 def inject_css():

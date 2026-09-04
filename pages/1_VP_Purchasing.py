@@ -4,7 +4,7 @@ import pandas as pd
 from utils import (
     inject_css, team_tag, load_data, round_range_slider, filter_rounds,
     pct, money, NAVY, GOLD, POSITIVE, NEGATIVE, NEUTRAL, GRID, CARD,
-    PLOTLY_TEMPLATE,
+    PLOTLY_TEMPLATE, Y2_AXIS_STYLE, axis_title,
 )
 
 st.set_page_config(page_title="VP Purchasing — Team Zillions", page_icon="📦", layout="wide")
@@ -106,7 +106,7 @@ fig5.update_layout(**PLOTLY_TEMPLATE["layout"].to_plotly_json())
 fig5.update_layout(
     height=400,
     yaxis=dict(title="Raw material cost (% of COGS)"),
-    yaxis2=dict(title="ROI (%)", overlaying="y", side="right", showgrid=False),
+    yaxis2=dict(title=axis_title("ROI (%)"), overlaying="y", side="right", showgrid=False, **Y2_AXIS_STYLE),
     xaxis=dict(title="Round", tickmode="linear", dtick=1),
 )
 st.plotly_chart(fig5, width='stretch')
